@@ -1,105 +1,89 @@
+"use client";
 /**
- * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
+ * This config is used to set up Sanity Studio that's mounted on the `app/(sanity)/studio/[[...tool]]/page.tsx` route
  */
-
-import { visionTool } from '@sanity/vision'
-import { apiVersion, dataset, previewSecretId, projectId } from 'lib/sanity.api'
-import { pageStructure, singletonPlugin } from 'plugins/settings'
-import { defineConfig } from 'sanity'
-import { deskTool } from 'sanity/desk'
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import { visionTool } from "@sanity/vision";
+import { PluginOptions, defineConfig } from "sanity";
+import { unsplashImageAsset } from "sanity-plugin-asset-source-unsplash";
 import {
-  defineUrlResolver,
-  Iframe,
-  IframeOptions,
-} from 'sanity-plugin-iframe-pane'
-import { previewUrl } from 'sanity-plugin-iframe-pane/preview-url'
-import page from 'schemas/documents/page'
-import project from 'schemas/documents/project'
-import duration from 'schemas/objects/duration'
-import milestone from 'schemas/objects/milestone'
-import timeline from 'schemas/objects/timeline'
-import home from 'schemas/singletons/home'
-import settings from 'schemas/singletons/settings'
+  presentationTool,
+  defineDocuments,
+  defineLocations,
+  type DocumentLocation,
+} from "sanity/presentation";
+import { structureTool } from "sanity/structure";
 
-const title =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ||
-  'Next.js Personal Website with Sanity.io'
+import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
+import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
+import { assistWithPresets } from "@/sanity/plugins/assist";
+import author from "@/sanity/schemas/documents/author";
+import post from "@/sanity/schemas/documents/post";
+import settings from "@/sanity/schemas/singletons/settings";
+import { resolveHref } from "@/sanity/lib/utils";
 
-export const PREVIEWABLE_DOCUMENT_TYPES: string[] = [
-  home.name,
-  page.name,
-  project.name,
-]
-const PREVIEWABLE_DOCUMENT_TYPES_REQUIRING_SLUGS = [
-  page.name,
-  project.name,
-] satisfies typeof PREVIEWABLE_DOCUMENT_TYPES
-// Used to generate URLs for drafts and live previews
-export const PREVIEW_BASE_URL = '/api/draft'
-export const iframeOptions = {
-  url: defineUrlResolver({
-    base: PREVIEW_BASE_URL,
-    requiresSlug: PREVIEWABLE_DOCUMENT_TYPES_REQUIRING_SLUGS,
-  }),
-  urlSecretId: previewSecretId,
-  reload: { button: true },
-} satisfies IframeOptions
+const homeLocation = {
+  title: "Home",
+  href: "/",
+} satisfies DocumentLocation;
 
 export default defineConfig({
-  basePath: '/studio',
-  projectId: projectId || '',
-  dataset: dataset || '',
-  title,
+  basePath: studioUrl,
+  projectId,
+  dataset,
   schema: {
-    // If you want more content types, you can add them to this array
     types: [
       // Singletons
-      home,
       settings,
       // Documents
-      duration,
-      page,
-      project,
-      // Objects
-      milestone,
-      timeline,
+      post,
+      author,
     ],
   },
   plugins: [
-    deskTool({
-      structure: pageStructure([home, settings]),
-      // `defaultDocumentNode` is responsible for adding a “Preview” tab to the document pane
-      // You can add any React component to `S.view.component` and it will be rendered in the pane
-      // and have access to content in the form in real-time.
-      // It's part of the Studio's “Structure Builder API” and is documented here:
-      // https://www.sanity.io/docs/structure-builder-reference
-      defaultDocumentNode: (S, { schemaType }) => {
-        if ((PREVIEWABLE_DOCUMENT_TYPES as string[]).includes(schemaType)) {
-          return S.document().views([
-            // Default form view
-            S.view.form(),
-            // Preview
-            S.view.component(Iframe).options(iframeOptions).title('Preview'),
-          ])
-        }
-
-        return null
+    presentationTool({
+      resolve: {
+        mainDocuments: defineDocuments([
+          {
+            route: "/posts/:slug",
+            filter: `_type == "post" && slug.current == $slug`,
+          },
+        ]),
+        locations: {
+          settings: defineLocations({
+            locations: [homeLocation],
+            message: "This document is used on all pages",
+            tone: "caution",
+          }),
+          post: defineLocations({
+            select: {
+              title: "title",
+              slug: "slug.current",
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || "Untitled",
+                  href: resolveHref("post", doc?.slug)!,
+                },
+                homeLocation,
+              ],
+            }),
+          }),
+        },
       },
+      previewUrl: { previewMode: { enable: "/api/draft" } },
     }),
+    structureTool({ structure: pageStructure([settings]) }),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-    singletonPlugin([home.name, settings.name]),
-    // Add the "Open preview" action
-    previewUrl({
-      base: PREVIEW_BASE_URL,
-      requiresSlug: PREVIEWABLE_DOCUMENT_TYPES_REQUIRING_SLUGS,
-      urlSecretId: previewSecretId,
-      matchTypes: PREVIEWABLE_DOCUMENT_TYPES,
-    }),
+    singletonPlugin([settings.name]),
     // Add an image asset source for Unsplash
     unsplashImageAsset(),
+    // Sets up AI Assist with preset prompts
+    // https://www.sanity.io/docs/ai-assist
+    assistWithPresets(),
     // Vision lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
-  ],
-})
+    process.env.NODE_ENV === "development" &&
+      visionTool({ defaultApiVersion: apiVersion }),
+  ].filter(Boolean) as PluginOptions[],
+});
