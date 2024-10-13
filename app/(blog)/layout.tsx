@@ -25,8 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
     // Metadata should never contain stega
     stega: false,
   });
-  const title = settings?.title || demo.title;
-  const description = settings?.description || demo.description;
+  const title =  demo.title || settings?.title;
+  const description = demo.description || settings?.description;
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage);
   let metadataBase: URL | undefined = undefined;
