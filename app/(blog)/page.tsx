@@ -12,6 +12,10 @@ import type { HeroQueryResult } from "@/sanity.types";
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
+import Features from "./features";
+import Testimonials from "./testimonials";
+import Pricing from "./pricing";
+import NewsletterSignup from "./newsletter-signup";
 
 function Intro(props: { title: string | null | undefined; description: any }) {
   const title = props.title || demo.title;
@@ -95,6 +99,10 @@ export default async function Page() {
         />
       ) : ( */}
         <Splash />
+        <Features/>
+        <Pricing />
+        <Testimonials/>
+        <NewsletterSignup />
       {/* )} */}
       {/* {heroPost?._id && (
         <aside>
