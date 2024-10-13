@@ -5,7 +5,7 @@ import Avatar from "./avatar";
 import CoverImage from "./cover-image";
 import DateComponent from "./date";
 import MoreStories from "./more-stories";
-import Onboarding from "./onboarding";
+import Splash from "./splash";
 import PortableText from "./portable-text";
 
 import type { HeroQueryResult } from "@/sanity.types";
@@ -74,17 +74,17 @@ function HeroPost({
 }
 
 export default async function Page() {
-  const [settings, heroPost] = await Promise.all([
-    sanityFetch({
-      query: settingsQuery,
-    }),
-    sanityFetch({ query: heroQuery }),
-  ]);
+  // const [settings, heroPost] = await Promise.all([
+  //   sanityFetch({
+  //     query: settingsQuery,
+  //   }),
+  //   sanityFetch({ query: heroQuery }),
+  // ]);
 
   return (
     <div className="container mx-auto px-5">
-      <Intro title={settings?.title} description={settings?.description} />
-      {heroPost ? (
+      {/* <Intro title={settings?.title} description={settings?.description} /> */}
+      {/* {heroPost ? (
         <HeroPost
           title={heroPost.title}
           slug={heroPost.slug}
@@ -93,10 +93,10 @@ export default async function Page() {
           date={heroPost.date}
           author={heroPost.author}
         />
-      ) : (
-        <Onboarding />
-      )}
-      {heroPost?._id && (
+      ) : ( */}
+        <Splash />
+      {/* )} */}
+      {/* {heroPost?._id && (
         <aside>
           <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
             More Stories
@@ -105,7 +105,7 @@ export default async function Page() {
             <MoreStories skip={heroPost._id} limit={100} />
           </Suspense>
         </aside>
-      )}
+      )} */}
     </div>
   );
 }
