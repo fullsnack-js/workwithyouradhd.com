@@ -18,13 +18,16 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import Footer from "./footer";
+import { stringToPath } from "sanity";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await sanityFetch({
-    query: settingsQuery,
-    // Metadata should never contain stega
-    stega: false,
-  });
+  // const settings = await sanityFetch({
+  //   query: settingsQuery,
+  //   // Metadata should never contain stega
+  //   stega: false,
+  // });
+  const settings:{title?:string; description?:string; ogImage?: any;} = {}
   const title =  demo.title || settings?.title;
   const description = demo.description || settings?.description;
 
@@ -56,7 +59,7 @@ const inter = Inter({
   display: "swap",
 });
 
-async function Footer() {
+async function SanityFooter() {
   const data = await sanityFetch({ query: settingsQuery });
   const footer = data?.footer || [];
 
