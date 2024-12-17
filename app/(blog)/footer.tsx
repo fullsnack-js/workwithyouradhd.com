@@ -22,7 +22,7 @@ const navigation = {
       // },
       {
         name: 'Tiktok',
-        href: 'https://tiktok.com/workwithyouradhd',
+        href: 'https://tiktok.com/@workwithyouradhd',
         icon: (props:any) => (
           <svg
           {...props}
