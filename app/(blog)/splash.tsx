@@ -11,6 +11,15 @@ const navigation = [
 //   { name: 'Company', href: '#' },
 ]
 
+export const Mailto = ({ styles,email="workwithyouradhd@gmail.com", subject = "I want to learn more", body = '', children }:{email:string, subject?: string, body?: string, styles?:any,children: React.ReactNode[]}) => {
+  let params = subject || body ? '?' : '';
+  if (subject) params += `subject=${encodeURIComponent(subject)}`;
+  if (body) params += `${subject ? '&' : ''}body=${encodeURIComponent(body)}`;
+
+  return <a className={styles} href={`mailto:${email}${params}`}>{children}</a>;
+};
+
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -28,12 +37,23 @@ export default function Example() {
               />
             </a>
           </div>
-          <div className="lg:hidden flex items-center justify-end">
-            <a href="#" className="text-sm bg-yellow-200 px-4 py-2 rounded font-semibold leading-6 text-gray-900">
+          <div className="flex items-center">
+          <div className="flex items-center px-4">
+          <a
+                  href="https://calendly.com/workwithyouradhd/30min"
+                  className="rounded-md bg-orange-400 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+                >
+                  Free Consult
+                </a></div>
+          <div className="flex items-center justify-end">
+          
+            <Mailto email="workwithyouradhd@gmail.com" styles="text-xs sm:text-sm bg-yellow-300 hover:bg-yellow-200 px-4 py-2 rounded font-semibold leading-6 text-gray-600">
               Contact <span aria-hidden="true">&rarr;</span>
-            </a>
+            </Mailto>
+            
           </div>
-          <div className="flex lg:hidden">
+          </div>
+          <div className="flex hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -50,14 +70,20 @@ export default function Example() {
               </a>
             ))}
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm bg-yellow-200 px-4 py-2 rounded font-semibold leading-6 text-gray-900">
+          {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href={"mailto:workwithyouradhd@gmail.com"} className="text-sm bg-yellow-200 px-4 py-2 rounded font-semibold leading-6 text-gray-900">
               Contact <span aria-hidden="true">&rarr;</span>
             </a>
-          </div>
+             <a
+                  href="https://calendly.com/workwithyouradhd/30min"
+                  className="rounded-md bg-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Free Consultation
+                </a>
+          </div> */}
 
         </nav>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="hidden">
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
@@ -116,25 +142,23 @@ export default function Example() {
             </h1>
             <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
               <p className="text-lg leading-8 text-gray-600">
-                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                fugiat veniam occaecat fugiat aliqua. Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-                lorem cupidatat commodo.
+                Hi I'm Leslie! I'm an ADHD Coach whose life changed when I learned to manage my own ADHD. It is my passion and purpose to empower other neurodivergents to work WITH their unique brains to thrive. It IS possible to learn new skills and tools, and I am dedicated to helping you succeed.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <a
-                  href="#"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  href="https://calendly.com/workwithyouradhd/30min"
+                  className="rounded-md bg-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
                 >
-                  Get started
+                  Free Consultation
                 </a>
-                <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                  Learn more <span aria-hidden="true">→</span>
+                <a href={"mailto:workwithyouradhd@gmail.com"} className="rounded-md text-sm px-3.5 py-2.5 bg-yellow-300 hover:bg-yellow-200 font-semibold leading-6 text-gray-600">
+                  Contact <span aria-hidden="true">→</span>
                 </a>
               </div>
             </div>
             <img
               alt=""
-              src="https://images.unsplash.com/photo-1567532900872-f4e906cbf06a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1280&q=80"
+              src="/familia.jpg"
               className="mt-10 aspect-[6/5] w-full max-w-lg rounded-2xl object-cover sm:mt-16 lg:mt-0 lg:max-w-none xl:row-span-2 xl:row-end-2 xl:mt-36"
             />
           </div>

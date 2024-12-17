@@ -16,6 +16,7 @@ import Features from "./features";
 import Testimonials from "./testimonials";
 import Pricing from "./pricing";
 import NewsletterSignup from "./newsletter-signup";
+import About from "./about";
 
 function Intro(props: { title: string | null | undefined; description: any }) {
   const title = props.title || demo.title;
@@ -100,9 +101,6 @@ export default async function Page() {
       ) : ( */}
         <Splash />
         <Features/>
-        <Pricing />
-        <Testimonials/>
-        <NewsletterSignup />
       {/* )} */}
       {/* {heroPost?._id && (
         <aside>

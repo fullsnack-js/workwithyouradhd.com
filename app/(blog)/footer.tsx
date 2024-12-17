@@ -1,23 +1,49 @@
 const navigation = {
     main: [
-      { name: 'About', href: '#' },
-      { name: 'Blog', href: '#' },
-      { name: 'Services', href: '#' },
-      { name: 'FAQs', href: '#' },
-      { name: 'Contact', href: '#' },
+      // { name: 'About', href: '#' },
+      // { name: 'Blog', href: '#' },
+      // { name: 'Services', href: '#' },
+      { name: 'Free Consultation', href: 'https://calendly.com/workwithyouradhd/30min' },
+      { name: 'Contact', href: "mailto:workwithyouradhd@gmail.com" },
     ],
     social: [
+      // {
+      //   name: 'Facebook',
+      //   href: 'https://facebook.com/workwithyouradhd',
+      //   icon: (props:any) => (
+      //     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+      //       <path
+      //         fillRule="evenodd"
+      //         d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+      //         clipRule="evenodd"
+      //       />
+      //     </svg>
+      //   ),
+      // },
       {
         name: 'Facebook',
         href: 'https://facebook.com/workwithyouradhd',
         icon: (props:any) => (
-          <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+          <svg
+          {...props}
+          width="48"
+          height="48"
+          viewBox="0 0 48 48"
+          fill="currentColor"
+        >
+          <g
+            id="Icon/Social/tiktok-black"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="1"
+          >
             <path
-              fillRule="evenodd"
-              d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-              clipRule="evenodd"
-            />
-          </svg>
+              id="Fill-1"
+              d="M38.077 15.854c-2.008-.06-3.827-1.02-5.198-2.307A7.5 7.5 0 0 1 30.562 8h-5.589v20.83c0 3.513-2.096 5.588-4.696 5.588a4.699 4.699 0 1 1 0-9.396c.517.004 1.03.095 1.518.268V19.6a7 7 0 0 0-1.518-.16 10.282 10.282 0 1 0 10.285 10.28V18.832c2.166 1.51 4.753 2.208 7.515 2.255z"
+            ></path>
+          </g>
+        </svg>
+
         ),
       },
       {
@@ -33,15 +59,15 @@ const navigation = {
           </svg>
         ),
       },
-      {
-        name: 'X',
-        href: '#',
-        icon: (props: any) => (
-          <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-            <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
-          </svg>
-        ),
-      },
+      // {
+      //   name: 'X',
+      //   href: '#',
+      //   icon: (props: any) => (
+      //     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+      //       <path d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
+      //     </svg>
+      //   ),
+      // },
       {
         name: 'YouTube',
         href: 'https://youtube.com/@workwithyouradhd',
