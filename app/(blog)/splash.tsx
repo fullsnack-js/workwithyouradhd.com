@@ -142,7 +142,7 @@ export default function Example() {
             </h1>
             <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
               <p className="text-lg leading-8 text-gray-600">
-                Hi I'm Leslie! I'm an ADHD Coach whose life changed when I learned to manage my own ADHD. It is my passion and purpose to empower other neurodivergents to work WITH their unique brains to thrive. It IS possible to learn new skills and tools, and I am dedicated to helping you succeed.
+                {"Hi I'm Leslie! I'm an ADHD Coach whose life changed when I learned to manage my own ADHD. It is my passion and purpose to empower other neurodivergents to work WITH their unique brains to thrive. It IS possible to learn new skills and tools, and I am dedicated to helping you succeed."}
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <a
