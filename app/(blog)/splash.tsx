@@ -29,7 +29,7 @@ export default function Example() {
         <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
+              <span className="sr-only">Work With Your ADHD</span>
               <img
                 alt=""
                 src="/logo.png"
@@ -41,15 +41,15 @@ export default function Example() {
           <div className="flex items-center px-4">
           <a
                   href="https://calendly.com/workwithyouradhd/30min"
-                  className="rounded-md bg-orange-400 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-orange-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+                  className="rounded-md bg-orange-400 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300"
                 >
                   Free Consult
                 </a></div>
           <div className="flex items-center justify-end">
           
-            <Mailto email="workwithyouradhd@gmail.com" styles="text-xs sm:text-sm bg-yellow-300 hover:bg-yellow-200 px-4 py-2 rounded font-semibold leading-6 text-gray-600">
+            <a href={"mailto:workwithyouradhd@gmail.com"} className="text-xs sm:text-sm bg-yellow-300 bg-yellow-300 hover:bg-yellow-400 active:bg-yellow-500 focus:outline-none focus:ring focus:ring-yellow-200 px-3 py-1 sm:py-2 rounded-md font-semibold leading-6 text-gray-800">
               Contact <span aria-hidden="true">&rarr;</span>
-            </Mailto>
+            </a>
             
           </div>
           </div>
@@ -122,7 +122,7 @@ export default function Example() {
                     href="#"
                     className="-mx-3 block rounded-lg text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
-                    <span className='bg-yellow-200 px-3 py-2.5 rounded-lg '>Contact</span>
+                    <span className='bg-yellow-200 px-3 py-2 rounded-lg '>Contact</span>
                   </a>
                 </div>
               </div>
@@ -147,11 +147,11 @@ export default function Example() {
               <div className="mt-10 flex items-center gap-x-6">
                 <a
                   href="https://calendly.com/workwithyouradhd/30min"
-                  className="rounded-md bg-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                  className="rounded-md bg-orange-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300"
                 >
                   Free Consultation
                 </a>
-                <a href={"mailto:workwithyouradhd@gmail.com"} className="rounded-md text-sm px-3.5 py-2.5 bg-yellow-300 hover:bg-yellow-200 font-semibold leading-6 text-gray-600">
+                <a href={"mailto:workwithyouradhd@gmail.com"} className="rounded-md text-sm px-3.5 py-2 bg-yellow-300 hover:bg-yellow-400 active:bg-yellow-500 focus:outline-none focus:ring focus:ring-yellow-200 font-semibold leading-6 text-gray-800">
                   Contact <span aria-hidden="true">→</span>
                 </a>
               </div>
