@@ -111,6 +111,8 @@ export default async function Page() {
           excerpt={heroPost.excerpt}
           date={heroPost.date}
           author={heroPost.author}
+          estimatedReadingTime={heroPost.estimatedReadingTime}
+          series={heroPost.series}
         />
       ) : (
         <Onboarding />

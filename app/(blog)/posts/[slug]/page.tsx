@@ -43,7 +43,6 @@ export async function generateMetadata(
   return {
     authors: post?.author?.name ? [{ name: post?.author?.name }] : [],
     title: post?.title,
-    estimatedReadingTime: post?.estimatedReadingTime,
     description: post?.excerpt,
     openGraph: {
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
