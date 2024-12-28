@@ -20,6 +20,11 @@ import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
+import blockContent from "./sanity/schemas/objects/blockContent";
+import category from "./sanity/schemas/documents/category";
+import series from "./sanity/schemas/documents/series";
+import tags from "./sanity/schemas/documents/tags";
+import legal from "./sanity/schemas/documents/legal";
 
 const homeLocation = {
   title: "Home",
@@ -34,9 +39,15 @@ export default defineConfig({
     types: [
       // Singletons
       settings,
+      // Objects,
+      blockContent,
       // Documents
       post,
       author,
+      category,
+      series,
+      tags,
+      legal
     ],
   },
   plugins: [

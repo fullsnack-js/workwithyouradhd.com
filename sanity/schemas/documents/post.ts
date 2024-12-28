@@ -41,10 +41,45 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "content",
-      title: "Content",
+      name: "meta_description",
+      title: "Meta Description",
+      type: "text",
+    }),
+    defineField({
+      name: "meta_tags",
+      title: "Meta Tags",
+      type: "string",
+    }),
+    defineField({
+      name: "categories",
+      title: "Categories",
       type: "array",
-      of: [{ type: "block" }],
+      of: [{ type: "reference", to: { type: "category" } }],
+    }),
+    defineField({
+      name: "tags",
+      title: "Tags",
+      type: "array",
+      of: [{ type: "reference", to: { type: "tags" } }],
+    }),
+    defineField({
+      name: "isSeries",
+      title: "Is Series",
+      type: "boolean",
+      options: {
+        layout: "checkbox",
+      },
+    }),
+    defineField({
+      name: "series",
+      title: "Series",
+      type: "reference",
+      to: { type: "series" },
+    }),
+    defineField({
+      name: "body",
+      title: "Body",
+      type: "blockContent",
     }),
     defineField({
       name: "excerpt",

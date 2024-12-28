@@ -43,6 +43,7 @@ export async function generateMetadata(
   return {
     authors: post?.author?.name ? [{ name: post?.author?.name }] : [],
     title: post?.title,
+    estimatedReadingTime: post?.estimatedReadingTime,
     description: post?.excerpt,
     openGraph: {
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
@@ -68,7 +69,7 @@ export default async function PostPage({ params }: Props) {
         </Link>
       </h2>
       <article>
-        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance mb-12 text-4xl font-bold leading-tight tracking-tighter md:text-5xl md:leading-none lg:text-6xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
@@ -85,16 +86,32 @@ export default async function PostPage({ params }: Props) {
               <Avatar name={post.author.name} picture={post.author.picture} />
             )}
           </div>
-          <div className="mb-6 text-lg">
-            <div className="mb-4 text-lg">
+          <div className="mb-6 text-lg flex items-center justify-between">
+            <div className="text-lg">
               <DateComponent dateString={post.date} />
             </div>
+            <div className='ml-5 text-slate-500'>📖 {post.estimatedReadingTime ? post.estimatedReadingTime : '2'} mins</div>
+            {post?.series !== null && (
+                    <div className='text-[14px] m-1 md:text-lg'>
+                      
+                            {/* <span>SERIES: </span>
+                            <Link
+                                href={"/series/"+post?.series?.slug?.current}
+                                className='text-indigo-300 dark:text-red-300'
+                            > */}
+                               <span className="p-2 bg-indigo-200 rounded-md">{post?.series?.title}</span>
+                            {/* </Link> */}
+                        
+                    </div>
+                )}
           </div>
+         
+
         </div>
-        {post.content?.length && (
+        {post.body?.length && (
           <PortableText
             className="mx-auto max-w-2xl"
-            value={post.content as PortableTextBlock[]}
+            value={post.body as PortableTextBlock[]}
           />
         )}
       </article>
