@@ -5,9 +5,10 @@ import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'About', href: '#' },
-  { name: 'Blog', href: '#' },
-  { name: 'FAQs', href: '#' },
+  // { name: 'About', href: '#' },
+  { name: 'Blog', href: 'posts' },
+  // { name: 'Legal', href: 'legal' },
+  // { name: 'FAQs', href: '#' },
 //   { name: 'Company', href: '#' },
 ]
 
@@ -28,7 +29,7 @@ export default function Example() {
       <header className="absolute inset-x-0 top-0 z-50">
         <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
+            <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Work With Your ADHD</span>
               <img
                 alt=""
@@ -37,7 +38,17 @@ export default function Example() {
               />
             </a>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center justify-end">
+
+          {/* </div>
+          <div className="flex items-center"> */}
+               <div className="hidden lg:flex lg:gap-x-12 lg:mr-4">
+            {navigation.map((item) => (
+              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+                {item.name}
+              </a>
+            ))}
+          </div>
           <div className="flex items-center px-4">
           <a
                   href="https://calendly.com/workwithyouradhd/30min"
@@ -53,7 +64,7 @@ export default function Example() {
             
           </div>
           </div>
-          <div className="flex hidden">
+          <div className="flex lg:hidden">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -63,13 +74,7 @@ export default function Example() {
               <Bars3Icon aria-hidden="true" className="h-6 w-6" />
             </button>
           </div>
-          <div className="hidden">
-            {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
-                {item.name}
-              </a>
-            ))}
-          </div>
+     
           {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href={"mailto:workwithyouradhd@gmail.com"} className="text-sm bg-yellow-200 px-4 py-2 rounded font-semibold leading-6 text-gray-900">
               Contact <span aria-hidden="true">&rarr;</span>
@@ -83,12 +88,12 @@ export default function Example() {
           </div> */}
 
         </nav>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="hidden">
+        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
           <div className="fixed inset-0 z-50" />
           <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
+              <a href="/" className="-m-1.5 p-1.5">
+                <span className="sr-only">Work with your ADHD</span>
                 <img
                 alt=""
                 src="/logo.png"
@@ -116,6 +121,14 @@ export default function Example() {
                       {item.name}
                     </a>
                   ))}
+                </div>
+                <div className="py-6">
+                <a
+                  href="https://calendly.com/workwithyouradhd/30min"
+                  className="rounded-md bg-orange-400 px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300"
+                >
+                  Free Consult
+                </a>
                 </div>
                 <div className="py-6">
                   <a
