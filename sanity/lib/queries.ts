@@ -8,7 +8,15 @@ const postFields = /* groq */ `
   _updatedAt,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
-  body,
+  body[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "internalLink" => {
+        "slug": @.reference->slug
+      }
+    }
+  },
   "slug": slug.current,
   excerpt,
   isSeries,
@@ -31,7 +39,15 @@ export const heroQuery = defineQuery(`
     _updatedAt,
     "status": select(_originalId in path("drafts.**") => "draft", "published"),
     "title": coalesce(title, "Untitled"),
-    body,
+    body[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "internalLink" => {
+        "slug": @.reference->slug
+      }
+    }
+  },
     "slug": slug.current,
     excerpt,
     isSeries,

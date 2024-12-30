@@ -32,6 +32,11 @@ export default function CustomPortableText({
       ),
     },
     marks: {
+      internalLink: ({value, children}) => {
+        const {slug = {}} = value
+        const href = `/posts/${slug.current}`
+        return <Link className="text-indigo-600 hover:text-indigo-700 text-decoration-underline" href={href}>{children}</Link>
+      },
       link: ({ children, value }) => {
         const rel = !value?.href?.startsWith('/') ? 'noreferrer noopener' : undefined
         const targ = !value?.href?.startsWith('/') ? '_blank' : undefined
