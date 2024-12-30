@@ -37,9 +37,9 @@ export default function CustomPortableText({
         const targ = !value?.href?.startsWith('/') ? '_blank' : undefined
         return (
           !value?.href?.startsWith('/') ?
-            <a href={value.href} rel={rel} target={targ} className="text-indigo-200 dark:text-red-200 text-decoration-underline" aria-label={`${children}`}>
+            <a href={value.href} rel={rel} target={targ} className="text-indigo-600 hover:text-indigo-700 text-decoration-underline" aria-label={`${children}`}>
               {children}
-            </a> : <Link href={value.href} className="text-indigio-200 dark:text-red-200 text-decoration-underline">{children}</Link>
+            </a> : <Link href={value.href} className="text-indigo-600 hover:text-indigo-700 text-decoration-underline">{children}</Link>
         )
     },
   },

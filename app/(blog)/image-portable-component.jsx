@@ -14,8 +14,8 @@ const ImagePortableCom = ({ value }) => {
                         alt={value.alt || "Image"}
                         loading="lazy"
                         src={`${urlForImage(value)}`}
-                        height={value?.imageHeight}
-                        width={value?.imageWidth}
+                        height={value?.imageHeight ?? '400'}
+                        width={value?.imageWidth ?? '300'}
                         objectFit='contain'                   
                     />
                 {
