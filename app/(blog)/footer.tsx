@@ -2,7 +2,7 @@ const navigation = {
     main: [
       { name: 'Home', href: '/' },
       // { name: 'About', href: '#' },
-      { name: 'Blog', href: 'posts' },
+      { name: 'Blog', href: 'https://workwithyouradhd.com/posts' },
       // { name: 'Services', href: '#' },
       { name: 'Free Consultation', href: 'https://calendly.com/workwithyouradhd/30min' },
       { name: 'Contact', href: "mailto:workwithyouradhd@gmail.com" },

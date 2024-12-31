@@ -62,11 +62,28 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-5">
-      <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+    <div className="flex items-center justify-between mb-16 mt-10">
+      <h2 className=" text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
         <Link href="/" className="hover:underline">
           {settings?.title || demo.title}
         </Link>
       </h2>
+      <div className="flex items-center gap-x-4 md:gap-x-6">
+                <a
+                  href="https://calendly.com/workwithyouradhd/30min"
+                  className="rounded-md bg-orange-400 px-2.5 md:px-3.5 py-1.5 md:py-2.5 text-sm md:text-md lg:text-lg font-semibold text-white shadow-sm hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-300"
+                >
+                  Free Consult
+                </a>
+                <a href={"mailto:workwithyouradhd@gmail.com"} className="rounded-md text-sm md:text-md lg:text-lg px-2.5 md:px-3.5 py-1 md:py-2 bg-yellow-300 hover:bg-yellow-400 active:bg-yellow-500 focus:outline-none focus:ring focus:ring-yellow-200 font-semibold leading-6 text-gray-800">
+                  Contact <span className="hidden sm:absolute" aria-hidden="true">→</span>
+                </a>
+             
+      <a href={"https://workwithyouradhd.com/posts"} className="hover:underline font-semibold text-sm md:text-md lg:text-lg ">
+          Blog
+        </a>
+      </div>
+      </div>
       <article>
         <h1 className="text-balance mb-12 text-4xl font-bold leading-tight tracking-tighter md:text-5xl md:leading-none lg:text-6xl">
           {post.title}

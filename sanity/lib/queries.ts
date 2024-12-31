@@ -33,7 +33,7 @@ const postFields = /* groq */ `
 `;
 
 export const heroQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {
+  *[_type == "post" && defined(slug.current)] | order(date asc, _updatedAt asc) [0] {
     _id,
     _createdAt,
     _updatedAt,
@@ -67,7 +67,7 @@ export const heroQuery = defineQuery(`
 `);
 
 export const moreStoriesQuery = defineQuery(`
-  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date asc, _updatedAt asc) [0...$limit] {
     ${postFields}
   }
 `);

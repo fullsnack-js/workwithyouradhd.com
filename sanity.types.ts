@@ -645,14 +645,74 @@ export type SettingsQueryResult = {
   };
 } | null;
 // Variable: heroQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    _id,    _createdAt,    _updatedAt,    "status": select(_originalId in path("drafts.**") => "draft", "published"),    "title": coalesce(title, "Untitled"),    body,    "slug": slug.current,    excerpt,    isSeries,    coverImage,    meta_description,    "tags": tags[]-> {title,slug},    "series":series -> {title,slug},    "category": categories[]-> {title,slug},    "numberOfCharacters": length(pt::text(body)),    "estimatedWordCount": round(length(pt::text(body)) / 5),    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),    "date": coalesce(date, _updatedAt),    "author": author->{"name": coalesce(name, "Anonymous"), picture},      "mainImageWidth": mainImage.asset->metadata.dimensions.width,      "mainImageHeight": mainImage.asset->metadata.dimensions.height    }
+// Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {    _id,    _createdAt,    _updatedAt,    "status": select(_originalId in path("drafts.**") => "draft", "published"),    "title": coalesce(title, "Untitled"),    body[]{    ...,    markDefs[]{      ...,      _type == "internalLink" => {        "slug": @.reference->slug      }    }  },    "slug": slug.current,    excerpt,    isSeries,    coverImage,    meta_description,    "tags": tags[]-> {title,slug},    "series":series -> {title,slug},    "category": categories[]-> {title,slug},    "numberOfCharacters": length(pt::text(body)),    "estimatedWordCount": round(length(pt::text(body)) / 5),    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),    "date": coalesce(date, _updatedAt),    "author": author->{"name": coalesce(name, "Anonymous"), picture},      "mainImageWidth": mainImage.asset->metadata.dimensions.width,      "mainImageHeight": mainImage.asset->metadata.dimensions.height    }
 export type HeroQueryResult = {
   _id: string;
   _createdAt: string;
   _updatedAt: string;
   status: "draft" | "published";
   title: string | "Untitled";
-  body: BlockContent | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockComment" | "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal" | "title";
+    listItem?: "bullet" | "number";
+    markDefs: Array<{
+      reference?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "author";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "category";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "series";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "tags";
+      };
+      _type: "internalLink";
+      _key: string;
+      slug: Slug | null;
+    } | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }> | null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+    markDefs: null;
+  }> | null;
   slug: string | null;
   excerpt: string | null;
   isSeries: boolean | null;
@@ -704,14 +764,74 @@ export type HeroQueryResult = {
   mainImageHeight: null;
 } | null;
 // Variable: moreStoriesQuery
-// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  _createdAt,  _updatedAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  body,  "slug": slug.current,  excerpt,  isSeries,  coverImage,  meta_description,  "tags": tags[]-> {title,slug},  "series":series -> {title,slug},  "category": categories[]-> {title,slug},  "numberOfCharacters": length(pt::text(body)),  "estimatedWordCount": round(length(pt::text(body)) / 5),  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),  "date": coalesce(date, _updatedAt),  "author": author->{"name": coalesce(name, "Anonymous"), picture},  }
+// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  _createdAt,  _updatedAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  body[]{    ...,    markDefs[]{      ...,      _type == "internalLink" => {        "slug": @.reference->slug      }    }  },  "slug": slug.current,  excerpt,  isSeries,  coverImage,  meta_description,  "tags": tags[]-> {title,slug},  "series":series -> {title,slug},  "category": categories[]-> {title,slug},  "numberOfCharacters": length(pt::text(body)),  "estimatedWordCount": round(length(pt::text(body)) / 5),  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),  "date": coalesce(date, _updatedAt),  "author": author->{"name": coalesce(name, "Anonymous"), picture},  }
 export type MoreStoriesQueryResult = Array<{
   _id: string;
   _createdAt: string;
   _updatedAt: string;
   status: "draft" | "published";
   title: string | "Untitled";
-  body: BlockContent | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockComment" | "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal" | "title";
+    listItem?: "bullet" | "number";
+    markDefs: Array<{
+      reference?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "author";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "category";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "series";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "tags";
+      };
+      _type: "internalLink";
+      _key: string;
+      slug: Slug | null;
+    } | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }> | null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+    markDefs: null;
+  }> | null;
   slug: string | null;
   excerpt: string | null;
   isSeries: boolean | null;
@@ -761,7 +881,7 @@ export type MoreStoriesQueryResult = Array<{
   } | null;
 }>;
 // Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  _createdAt,  _updatedAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  body,  "slug": slug.current,  excerpt,  isSeries,  coverImage,  meta_description,  "tags": tags[]-> {title,slug},  "series":series -> {title,slug},  "category": categories[]-> {title,slug},  "numberOfCharacters": length(pt::text(body)),  "estimatedWordCount": round(length(pt::text(body)) / 5),  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),  "date": coalesce(date, _updatedAt),  "author": author->{"name": coalesce(name, "Anonymous"), picture},  }
+// Query: *[_type == "post" && slug.current == $slug] [0] {    content,      _id,  _createdAt,  _updatedAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  body[]{    ...,    markDefs[]{      ...,      _type == "internalLink" => {        "slug": @.reference->slug      }    }  },  "slug": slug.current,  excerpt,  isSeries,  coverImage,  meta_description,  "tags": tags[]-> {title,slug},  "series":series -> {title,slug},  "category": categories[]-> {title,slug},  "numberOfCharacters": length(pt::text(body)),  "estimatedWordCount": round(length(pt::text(body)) / 5),  "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180 ),  "date": coalesce(date, _updatedAt),  "author": author->{"name": coalesce(name, "Anonymous"), picture},  }
 export type PostQueryResult = {
   content: null;
   _id: string;
@@ -769,7 +889,67 @@ export type PostQueryResult = {
   _updatedAt: string;
   status: "draft" | "published";
   title: string | "Untitled";
-  body: BlockContent | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockComment" | "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal" | "title";
+    listItem?: "bullet" | "number";
+    markDefs: Array<{
+      reference?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "author";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "category";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "series";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "tags";
+      };
+      _type: "internalLink";
+      _key: string;
+      slug: Slug | null;
+    } | {
+      href?: string;
+      _type: "link";
+      _key: string;
+    }> | null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+    markDefs: null;
+  }> | null;
   slug: string | null;
   excerpt: string | null;
   isSeries: boolean | null;
@@ -1007,9 +1187,9 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]": SettingsQueryResult;
-    "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    _id,\n    _createdAt,\n    _updatedAt,\n    \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n    \"title\": coalesce(title, \"Untitled\"),\n    body,\n    \"slug\": slug.current,\n    excerpt,\n    isSeries,\n    coverImage,\n    meta_description,\n    \"tags\": tags[]-> {title,slug},\n    \"series\":series -> {title,slug},\n    \"category\": categories[]-> {title,slug},\n    \"numberOfCharacters\": length(pt::text(body)),\n    \"estimatedWordCount\": round(length(pt::text(body)) / 5),\n    \"estimatedReadingTime\": round(length(pt::text(body)) / 5 / 180 ),\n    \"date\": coalesce(date, _updatedAt),\n    \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n      \"mainImageWidth\": mainImage.asset->metadata.dimensions.width,\n      \"mainImageHeight\": mainImage.asset->metadata.dimensions.height\n    }\n": HeroQueryResult;
-    "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  _createdAt,\n  _updatedAt,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  body,\n  \"slug\": slug.current,\n  excerpt,\n  isSeries,\n  coverImage,\n  meta_description,\n  \"tags\": tags[]-> {title,slug},\n  \"series\":series -> {title,slug},\n  \"category\": categories[]-> {title,slug},\n  \"numberOfCharacters\": length(pt::text(body)),\n  \"estimatedWordCount\": round(length(pt::text(body)) / 5),\n  \"estimatedReadingTime\": round(length(pt::text(body)) / 5 / 180 ),\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
-    "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  _createdAt,\n  _updatedAt,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  body,\n  \"slug\": slug.current,\n  excerpt,\n  isSeries,\n  coverImage,\n  meta_description,\n  \"tags\": tags[]-> {title,slug},\n  \"series\":series -> {title,slug},\n  \"category\": categories[]-> {title,slug},\n  \"numberOfCharacters\": length(pt::text(body)),\n  \"estimatedWordCount\": round(length(pt::text(body)) / 5),\n  \"estimatedReadingTime\": round(length(pt::text(body)) / 5 / 180 ),\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
+    "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    _id,\n    _createdAt,\n    _updatedAt,\n    \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n    \"title\": coalesce(title, \"Untitled\"),\n    body[]{\n    ...,\n    markDefs[]{\n      ...,\n      _type == \"internalLink\" => {\n        \"slug\": @.reference->slug\n      }\n    }\n  },\n    \"slug\": slug.current,\n    excerpt,\n    isSeries,\n    coverImage,\n    meta_description,\n    \"tags\": tags[]-> {title,slug},\n    \"series\":series -> {title,slug},\n    \"category\": categories[]-> {title,slug},\n    \"numberOfCharacters\": length(pt::text(body)),\n    \"estimatedWordCount\": round(length(pt::text(body)) / 5),\n    \"estimatedReadingTime\": round(length(pt::text(body)) / 5 / 180 ),\n    \"date\": coalesce(date, _updatedAt),\n    \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n      \"mainImageWidth\": mainImage.asset->metadata.dimensions.width,\n      \"mainImageHeight\": mainImage.asset->metadata.dimensions.height\n    }\n": HeroQueryResult;
+    "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  _createdAt,\n  _updatedAt,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  body[]{\n    ...,\n    markDefs[]{\n      ...,\n      _type == \"internalLink\" => {\n        \"slug\": @.reference->slug\n      }\n    }\n  },\n  \"slug\": slug.current,\n  excerpt,\n  isSeries,\n  coverImage,\n  meta_description,\n  \"tags\": tags[]-> {title,slug},\n  \"series\":series -> {title,slug},\n  \"category\": categories[]-> {title,slug},\n  \"numberOfCharacters\": length(pt::text(body)),\n  \"estimatedWordCount\": round(length(pt::text(body)) / 5),\n  \"estimatedReadingTime\": round(length(pt::text(body)) / 5 / 180 ),\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
+    "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  _createdAt,\n  _updatedAt,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  body[]{\n    ...,\n    markDefs[]{\n      ...,\n      _type == \"internalLink\" => {\n        \"slug\": @.reference->slug\n      }\n    }\n  },\n  \"slug\": slug.current,\n  excerpt,\n  isSeries,\n  coverImage,\n  meta_description,\n  \"tags\": tags[]-> {title,slug},\n  \"series\":series -> {title,slug},\n  \"category\": categories[]-> {title,slug},\n  \"numberOfCharacters\": length(pt::text(body)),\n  \"estimatedWordCount\": round(length(pt::text(body)) / 5),\n  \"estimatedReadingTime\": round(length(pt::text(body)) / 5 / 180 ),\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
     "\n  *[_type == \"post\" && isSeries == true && series-> slug.current == $slug]{\n    _id,\n    createdAt,\n    title,\n    body,\n    \"date\": coalesce(date, _updatedAt),\n    \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n     coverImage,\n        slug,\n        \"tags\": tags[]-> {title,slug},\n        \"category\": categories[]-> {title,slug},\n        \"series\":series-> {title,slug},\n      \n}[0..2]": GetRelatedSeriesPostForSinglePostQueryResult;
     "*[_type == \"tags\"]": GetTagsQueryResult;
     "\n  *[_type == \"post\" && $slug in tags[]->slug.current]{\n    _createdAt,\n    \"date\": coalesce(date, _updatedAt),\n    title,\n    body,\n   \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n    meta_description,\n    coverImage,\n    slug,\n    \"tags\": tags[]-> {title,slug},\n    \"category\": categories[]-> {title,slug},\n    \"series\":series-> {title,slug},\n}": GetTagRelatedPostQueryResult;
